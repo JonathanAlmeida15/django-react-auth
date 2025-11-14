@@ -1,0 +1,9 @@
+<h1>Lista de Clientes</h1>
+
+<ul>
+    {% for client in object_list %}
+        <li>{{ client.name }} - {{ client.email }}</li>
+    {% empty %}
+        <li>Nenhum cliente cadastrado.</li>
+    {% endfor %}
+</ul>
