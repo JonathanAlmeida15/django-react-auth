@@ -5,6 +5,7 @@ import com.example.springapicrud.dto.CustomerDTO;
 import com.example.springapicrud.entity.Customer;
 
 public class CustomerMapper {
+
     public static Customer toEntity(CreateCustomerDTO dto){
         Customer c = new Customer();
         c.setName(dto.getName());
