@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 
-export default function Login({ onLogin }) {
+export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -12,16 +12,23 @@ export default function Login({ onLogin }) {
     setError("");
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/token/", {
+      const response = await axios.post("http://127.0.0.1:8000/api/login/", {
         username,
         password,
       });
 
+      // 🔥 DEBUG – LOG DO SERVIDOR
+      console.log("RESPOSTA DO LOGIN:", response.data);
+
+      // Armazenar tokens
       localStorage.setItem("access", response.data.access);
       localStorage.setItem("refresh", response.data.refresh);
 
-      onLogin();
+      // 🔥 Redireciona automaticamente
+      window.location.href = "/dashboard";
+
     } catch (err) {
+      console.log("ERRO DETALHADO:", err);
       setError("Usuário ou senha incorretos.");
     }
   };
@@ -77,6 +84,19 @@ export default function Login({ onLogin }) {
         <p className="text-gray-400 text-center text-sm mt-6">
           Desenvolvido com Django + React 🔥
         </p>
+
+        {/* 🔽 BOTÃO CRIAR CONTA 🔽 */}
+        <motion.button
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          onClick={() => (window.location.href = "/register")}
+          className="w-full mt-4 py-3 bg-gray-800 hover:bg-gray-700 border border-gray-600 
+                     rounded-xl text-indigo-300 font-semibold shadow-lg transition"
+        >
+          Criar uma conta
+        </motion.button>
+        {/* 🔼 FIM DO BOTÃO 🔼 */}
+
       </motion.div>
 
     </div>
